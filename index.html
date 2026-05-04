@@ -346,8 +346,9 @@
 
     .projects-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 1.5rem;
+      align-items: stretch;
     }
 
     .project-card {
@@ -776,6 +777,61 @@
     <div class="projects-grid">
 
       <div class="project-card">
+        <img src="Rag.png" alt="RAG-Local" class="project-img">
+        <h3>RAG-Local</h3>
+        <p>Application RAG locale combinant backend Python et interface web pour la recherche contextuelle et génération de réponses privacy-first.</p>
+        <div class="tags" style="margin-bottom:1rem">
+          <span class="tag">Python</span><span class="tag">RAG pipeline</span><span class="tag">Stockage vectoriel</span><span class="tag">JavaScript</span>
+        </div>
+        <div class="project-footer">
+          <a href="https://github.com/HamdiEA/RAG-Local" class="project-link" target="_blank">GitHub →</a>
+          <span class="project-year">2026</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <img src="SENSE.png" alt="SENSE" class="project-img">
+        <h3>SENSE</h3>
+        <p>Jeu éducatif vocal pour enfants non-voyants, utilisant Speech-to-Text et Text-to-Speech pour une expérience sonore et imaginative.</p>
+        <div class="tags" style="margin-bottom:1rem">
+          <span class="tag">IA vocale</span><span class="tag">Speech-to-Text</span><span class="tag">JavaScript</span><span class="tag">Web Audio</span>
+        </div>
+        <div class="project-footer">
+          <a href="https://github.com/HamdiEA/SENSE" class="project-link" target="_blank">GitHub →</a>
+          <span class="project-year">2026</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <img src="cybervision.png" alt="CyberVision" class="project-img">
+        <h3>CyberVision</h3>
+        <p>Plateforme d'analyse forensique d'images assistée par IA — analyse EXIF, entropie de Shannon, détection stéganographie LSB, traitement OpenCV.</p>
+        <div class="tags" style="margin-bottom:1rem">
+          <span class="tag">Python</span><span class="tag">OpenCV</span><span class="tag">Machine Learning</span><span class="tag">JavaScript</span>
+        </div>
+        <div class="project-footer">
+          <a href="https://github.com/HamdiEA/CyberVision" class="project-link" target="_blank">GitHub →</a>
+          <span class="project-year">2025</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <img src="wise-logo.jpg" alt="The Wise Restaurant" class="project-img">
+        <h3>The Wise Restaurant</h3>
+        <p>Site de restauration avec chatbot IA recommandant des plats selon allergies et préférences. Backend proxy inclus.</p>
+        <div class="tags" style="margin-bottom:1rem">
+          <span class="tag">React</span><span class="tag">TypeScript</span><span class="tag">Node.js</span><span class="tag">DeepSeek</span>
+        </div>
+        <div class="project-footer">
+          <div style="display:flex;gap:0.8rem">
+            <a href="https://thewiserestaurants.com" class="project-link" target="_blank">Site →</a>
+            <a href="https://github.com/HamdiEA/the-wise-ai" class="project-link" target="_blank">Code →</a>
+          </div>
+          <span class="project-year">2025</span>
+        </div>
+      </div>
+
+      <div class="project-card">
         <img src="logo (1).jpg" alt="Aventure Étudiant" class="project-img">
         <h3>Aventure Étudiant</h3>
         <p>Site web pour étudiants internationaux avec base de données et gestion de profils.</p>
@@ -815,22 +871,6 @@
       </div>
 
       <div class="project-card">
-        <img src="wise-logo.jpg" alt="The Wise Restaurant" class="project-img">
-        <h3>The Wise Restaurant</h3>
-        <p>Site de restauration avec chatbot IA recommandant des plats selon allergies et préférences. Backend proxy inclus.</p>
-        <div class="tags" style="margin-bottom:1rem">
-          <span class="tag">React</span><span class="tag">TypeScript</span><span class="tag">Node.js</span><span class="tag">DeepSeek</span>
-        </div>
-        <div class="project-footer">
-          <div style="display:flex;gap:0.8rem">
-            <a href="https://thewiserestaurants.com" class="project-link" target="_blank">Site →</a>
-            <a href="https://github.com/HamdiEA/the-wise-ai" class="project-link" target="_blank">Code →</a>
-          </div>
-          <span class="project-year">2025</span>
-        </div>
-      </div>
-
-      <div class="project-card">
         <img src="bootstrap-5-layout (1).jpg" alt="Portfolio" class="project-img">
         <h3>Portfolio</h3>
         <p>Portfolio personnel responsive.</p>
@@ -840,45 +880,6 @@
         <div class="project-footer">
           <a href="https://github.com/HamdiEA/portfulioEA" class="project-link" target="_blank">GitHub →</a>
           <span class="project-year">2024</span>
-        </div>
-      </div>
-
-      <div class="project-card">
-        <div class="project-emoji">🔍</div>
-        <h3>CyberVision</h3>
-        <p>Plateforme d'analyse forensique d'images assistée par IA — analyse EXIF, entropie de Shannon, détection stéganographie LSB, traitement OpenCV.</p>
-        <div class="tags" style="margin-bottom:1rem">
-          <span class="tag">Python</span><span class="tag">OpenCV</span><span class="tag">Machine Learning</span><span class="tag">JavaScript</span>
-        </div>
-        <div class="project-footer">
-          <a href="https://github.com/HamdiEA/CyberVision" class="project-link" target="_blank">GitHub →</a>
-          <span class="project-year">2025</span>
-        </div>
-      </div>
-
-      <div class="project-card">
-        <div class="project-emoji">🧠</div>
-        <h3>RAG-Local</h3>
-        <p>Application RAG locale combinant backend Python et interface web pour la recherche contextuelle et génération de réponses privacy-first.</p>
-        <div class="tags" style="margin-bottom:1rem">
-          <span class="tag">Python</span><span class="tag">RAG pipeline</span><span class="tag">Stockage vectoriel</span><span class="tag">JavaScript</span>
-        </div>
-        <div class="project-footer">
-          <a href="https://github.com/HamdiEA/RAG-Local" class="project-link" target="_blank">GitHub →</a>
-          <span class="project-year">2026</span>
-        </div>
-      </div>
-
-      <div class="project-card">
-        <div class="project-emoji">🎮</div>
-        <h3>SENSE</h3>
-        <p>Jeu éducatif vocal pour enfants non-voyants, utilisant Speech-to-Text et Text-to-Speech pour une expérience sonore et imaginative.</p>
-        <div class="tags" style="margin-bottom:1rem">
-          <span class="tag">IA vocale</span><span class="tag">Speech-to-Text</span><span class="tag">JavaScript</span><span class="tag">Web Audio</span>
-        </div>
-        <div class="project-footer">
-          <a href="https://github.com/HamdiEA/SENSE" class="project-link" target="_blank">GitHub →</a>
-          <span class="project-year">2026</span>
         </div>
       </div>
 
