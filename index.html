@@ -1,305 +1,967 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hamdi El Abed | Développeur Full-Stack | React · Node.js · Intégration IA</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-    <style>
-        html { scroll-behavior: smooth; }
-        section { padding-top: 80px; }
-        .badge { font-size: 1rem; padding: 0.5rem 1rem; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hamdi El Abed | Cybersécurité · IA · Cloud</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0f;
+      --surface: #111118;
+      --surface2: #1a1a24;
+      --border: rgba(255,255,255,0.07);
+      --accent: #6c63ff;
+      --accent2: #00d4aa;
+      --accent3: #ff6b6b;
+      --text: #e8e8f0;
+      --muted: #888899;
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.4;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.2rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      backdrop-filter: blur(20px);
+      background: rgba(10,10,15,0.8);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-logo span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.2s;
+      letter-spacing: 0.02em;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-toggle { display: none; background: none; border: none; color: var(--text); font-size: 1.5rem; cursor: pointer; }
+
+    /* ── HERO ── */
+    #home {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-glow {
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(108,99,255,0.15) 0%, transparent 70%);
+      top: -100px; right: -100px;
+      pointer-events: none;
+    }
+
+    .hero-glow2 {
+      position: absolute;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,212,170,0.1) 0%, transparent 70%);
+      bottom: 0; left: -100px;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(108,99,255,0.1);
+      border: 1px solid rgba(108,99,255,0.3);
+      border-radius: 100px;
+      padding: 0.3rem 1rem;
+      font-size: 0.8rem;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      font-weight: 500;
+    }
+
+    .hero-tag::before { content: '●'; font-size: 0.5rem; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+    h1.hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+    }
+
+    h1.hero-title .line2 { color: var(--accent); }
+    h1.hero-title .line3 { color: var(--accent2); }
+
+    .hero-desc {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 560px;
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary-custom {
+      background: var(--accent);
+      color: #fff;
+      padding: 0.8rem 2rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: opacity 0.2s, transform 0.2s;
+      display: inline-block;
+    }
+
+    .btn-primary-custom:hover { opacity: 0.85; transform: translateY(-2px); }
+
+    .btn-outline-custom {
+      background: transparent;
+      color: var(--text);
+      padding: 0.8rem 2rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      border: 1px solid var(--border);
+      transition: border-color 0.2s, transform 0.2s;
+      display: inline-block;
+    }
+
+    .btn-outline-custom:hover { border-color: var(--accent); transform: translateY(-2px); }
+
+    .hero-stats {
+      display: flex;
+      gap: 3rem;
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    .stat-label { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+    /* ── SECTIONS ── */
+    section { padding: 6rem 2rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    .section-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+
+    h2.section-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 3rem;
+      line-height: 1.1;
+    }
+
+    /* ── ABOUT ── */
+    #about { background: var(--surface); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .about-img-wrap {
+      position: relative;
+    }
+
+    .about-img-wrap img {
+      width: 100%;
+      border-radius: 16px;
+      display: block;
+      filter: grayscale(20%);
+    }
+
+    .about-img-wrap::after {
+      content: '';
+      position: absolute;
+      inset: -8px;
+      border-radius: 20px;
+      border: 1px solid rgba(108,99,255,0.3);
+      pointer-events: none;
+    }
+
+    .about-badge {
+      position: absolute;
+      bottom: -16px; right: -16px;
+      background: var(--accent);
+      color: #fff;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 0.6rem 1rem;
+      border-radius: 10px;
+    }
+
+    .about-text p { color: var(--muted); margin-bottom: 1rem; font-weight: 300; }
+    .about-text strong { color: var(--text); }
+
+    .about-info {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .info-item {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.8rem 1rem;
+    }
+
+    .info-label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.2rem; }
+    .info-val { font-size: 0.9rem; font-weight: 500; }
+
+    /* ── SKILLS ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .skill-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.5rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .skill-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+
+    .skill-card-icon {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .skill-card h3 {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      letter-spacing: -0.01em;
+    }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+    .tag {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.25rem 0.6rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    /* ── PROJECTS ── */
+    #portfolio { background: var(--surface); }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.8rem;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.2s, transform 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .project-card:hover { border-color: rgba(108,99,255,0.4); transform: translateY(-4px); }
+    .project-card:hover::before { opacity: 1; }
+
+    .project-emoji { font-size: 2rem; margin-bottom: 1rem; }
+
+    .project-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    .project-card p {
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 300;
+      flex: 1;
+      margin-bottom: 1.2rem;
+    }
+
+    .project-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+    }
+
+    .project-link {
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: gap 0.2s;
+    }
+
+    .project-link:hover { gap: 0.6rem; }
+
+    .project-year {
+      font-size: 0.75rem;
+      color: var(--muted);
+      background: var(--surface2);
+      padding: 0.2rem 0.6rem;
+      border-radius: 100px;
+    }
+
+    /* ── EXPERIENCE ── */
+    .timeline { position: relative; padding-left: 2rem; }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 1px;
+      background: var(--border);
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-bottom: 2.5rem;
+    }
+
+    .timeline-item:last-child { padding-bottom: 0; }
+
+    .timeline-dot {
+      position: absolute;
+      left: -2.4rem;
+      top: 0.3rem;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid var(--bg);
+      box-shadow: 0 0 0 3px rgba(108,99,255,0.2);
+    }
+
+    .timeline-date {
+      font-size: 0.78rem;
+      color: var(--accent2);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.3rem;
+    }
+
+    .timeline-item h3 {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.2rem;
+    }
+
+    .timeline-org {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.6rem;
+    }
+
+    .timeline-desc {
+      font-size: 0.9rem;
+      color: var(--muted);
+      font-weight: 300;
+    }
+
+    /* ── EDUCATION ── */
+    #education { background: var(--surface); }
+
+    .edu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .edu-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.5rem;
+      transition: border-color 0.2s;
+    }
+
+    .edu-card:hover { border-color: var(--accent2); }
+
+    .edu-year {
+      font-size: 0.75rem;
+      color: var(--accent2);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.5rem;
+    }
+
+    .edu-card h3 {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.3rem;
+    }
+
+    .edu-card .school { font-size: 0.85rem; color: var(--muted); }
+
+    /* ── LANGUAGES ── */
+    .lang-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .lang-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.2rem 1.8rem;
+      text-align: center;
+      min-width: 140px;
+    }
+
+    .lang-flag { font-size: 1.8rem; margin-bottom: 0.5rem; }
+    .lang-name { font-family: var(--font-display); font-weight: 700; font-size: 0.95rem; }
+    .lang-level { font-size: 0.78rem; color: var(--accent2); margin-top: 0.2rem; }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--surface); }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      max-width: 800px;
+    }
+
+    .contact-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.5rem;
+      transition: border-color 0.2s;
+    }
+
+    .contact-card:hover { border-color: var(--accent); }
+
+    .contact-icon { font-size: 1.5rem; margin-bottom: 0.6rem; }
+    .contact-label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.3rem; }
+    .contact-val { font-size: 0.9rem; font-weight: 500; word-break: break-all; }
+    .contact-val a { color: var(--text); text-decoration: none; }
+    .contact-val a:hover { color: var(--accent); }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 2rem;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .footer-links { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 1rem; }
+    .footer-links a { color: var(--muted); text-decoration: none; font-size: 1.2rem; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--accent); }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; flex-direction: column; gap: 1rem; position: absolute; top: 100%; left: 0; right: 0; background: var(--surface); padding: 1.5rem 2rem; border-bottom: 1px solid var(--border); }
+      .nav-links.open { display: flex; }
+      .nav-toggle { display: block; }
+      .about-grid { grid-template-columns: 1fr; }
+      .about-img-wrap { max-width: 280px; }
+      .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
+    }
+  </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
-        <div class="container">
-            <a class="navbar-brand fw-bold text-primary" href="#">Hamdi EA</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#home">Accueil</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#about">À propos</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#skills">Compétences</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#portfolio">Portfolio</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#experience">Expérience</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#career">Objectifs</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-                </ul>
-            </div>
+
+<!-- NAV -->
+<nav>
+  <a href="#home" class="nav-logo">Hamdi <span>EA</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about">À propos</a></li>
+    <li><a href="#skills">Compétences</a></li>
+    <li><a href="#portfolio">Projets</a></li>
+    <li><a href="#experience">Expérience</a></li>
+    <li><a href="#education">Formation</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-toggle" onclick="document.getElementById('navLinks').classList.toggle('open')">☰</button>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-inner">
+    <div class="hero-tag">Disponible pour alternance — Rentrée 2026</div>
+    <h1 class="hero-title">
+      EL ABED Hamdi<br>
+      <span class="line2">Cybersécurité · IA</span><br>
+      <span class="line3">& Cloud</span>
+    </h1>
+    <p class="hero-desc">
+      Futur étudiant en Master RES-ALT à Sorbonne Université. Passionné par la sécurité des systèmes, l'intelligence artificielle et les infrastructures cloud.
+    </p>
+    <div class="hero-btns">
+      <a href="#portfolio" class="btn-primary-custom">Voir mes projets</a>
+      <a href="#contact" class="btn-outline-custom">Me contacter</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">5+</div>
+        <div class="stat-label">Projets réalisés</div>
+      </div>
+      <div>
+        <div class="stat-num">3</div>
+        <div class="stat-label">Langues maîtrisées</div>
+      </div>
+      <div>
+        <div class="stat-num">2026</div>
+        <div class="stat-label">Sorbonne — Master</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img-wrap">
+        <img src="Design sans titre (2).png" alt="Hamdi El Abed">
+        <div class="about-badge">INSA Hauts-de-France</div>
+      </div>
+      <div class="about-text">
+        <div class="section-label">À propos</div>
+        <h2 class="section-title">Développeur & futur<br>ingénieur cybersécurité</h2>
+        <p>Étudiant en <strong>Licence Informatique à l'INSA Hauts-de-France</strong>, admis en <strong>Master RES-ALT (Réseaux, Cybersécurité & Cloud) à Sorbonne Université</strong> pour 2026.</p>
+        <p>Avec une solide expérience en développement web full-stack et une passion pour la cybersécurité et l'IA, je cherche une alternance pour mettre mes compétences techniques au service de systèmes d'information sécurisés.</p>
+        <div class="about-info">
+          <div class="info-item">
+            <div class="info-label">Localisation</div>
+            <div class="info-val">Valenciennes, France</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Email</div>
+            <div class="info-val">hamdielabedtn1@gmail.com</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Téléphone</div>
+            <div class="info-val">07 75 72 67 24</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Disponibilité</div>
+            <div class="info-val">Rentrée 2026</div>
+          </div>
         </div>
-    </nav>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <section id="home" class="bg-primary text-white py-5">
-        <div class="container text-center pt-5">
-            <h1 class="display-4 fw-bold mb-4">Bonjour, je suis Hamdi EL ABED</h1>
-            <p class="lead mb-5">Étudiant en Informatique à l’INSA Hauts-de-France</p>
-            <div class="d-flex justify-content-center gap-3">
-                <a href="#portfolio" class="btn btn-outline-light btn-lg px-4">Voir mes projets</a>
-                <a href="#contact" class="btn btn-light btn-lg px-4">Me contacter</a>
-            </div>
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="section-label">Compétences</div>
+    <h2 class="section-title">Stack technique</h2>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-card-icon" style="background:rgba(108,99,255,0.15)">🔐</div>
+        <h3>Cybersécurité</h3>
+        <div class="tags">
+          <span class="tag">Analyse forensique</span>
+          <span class="tag">Stéganographie LSB</span>
+          <span class="tag">EXIF Analysis</span>
+          <span class="tag">Entropie de Shannon</span>
+          <span class="tag">OpenCV</span>
+          <span class="tag">Machine Learning</span>
         </div>
-    </section>
-
-    <section id="about" class="py-5">
-        <div class="container">
-            <h2 class="text-center mb-5">À propos</h2>
-            <div class="row align-items-center">
-                <div class="col-md-5 mb-4 mb-md-0 text-center">
-                    <img src="Design sans titre (2).png" alt="Photo de profil Hamdi El Abed" class="img-fluid rounded mt-3">
-                </div>
-                <div class="col-md-7">
-                    <p class="lead">
-                        Étudiant francophone en informatique à <strong>l’INSA Hauts-de-France</strong>, passionné par le 
-                        <strong>développement web full-stack</strong> et <strong>l’intégration d’API et d’intelligence artificielle</strong>.
-                        J’aime créer des applications modernes et intelligentes qui allient technologie et expérience utilisateur.
-                    </p>
-                    
-                    <div class="row mt-4">
-                        <div class="col-sm-6 mb-3">
-                            <i class="bi bi-person-fill text-primary me-2 fs-5"></i><strong>Nom :</strong> EL ABED Hamdi
-                        </div>
-                        <div class="col-sm-6 mb-3">
-                            <i class="bi bi-telephone-fill text-primary me-2 fs-5"></i><strong>Téléphone :</strong> 0775726724
-                        </div>
-                        <div class="col-sm-6 mb-3">
-                            <i class="bi bi-geo-alt-fill text-primary me-2 fs-5"></i><strong>Localisation :</strong> FAMARS 59300, Valenciennes
-                        </div>
-                        <div class="col-sm-6 mb-3">
-                            <i class="bi bi-envelope-fill text-primary me-2 fs-5"></i><strong>Email :</strong> hamdielabedtn1@gmail.com
-                        </div>
-                    </div>
-                </div>
-            </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-icon" style="background:rgba(0,212,170,0.15)">🤖</div>
+        <h3>IA & Data</h3>
+        <div class="tags">
+          <span class="tag">RAG Pipeline</span>
+          <span class="tag">Speech-to-Text</span>
+          <span class="tag">Text-to-Speech</span>
+          <span class="tag">Automatisation IA</span>
+          <span class="tag">DeepSeek/OpenRouter</span>
+          <span class="tag">Stockage vectoriel</span>
         </div>
-    </section>
-
-    <section id="skills" class="py-5 bg-light">
-        <div class="container">
-            <h2 class="text-center mb-5">Compétences</h2>
-            <div class="text-center">
-                <h4 class="mb-3">Techniques</h4>
-                <span class="badge bg-primary m-1">JavaScript</span>
-                <span class="badge bg-primary m-1">HTML</span>
-                <span class="badge bg-primary m-1">CSS</span>
-                <span class="badge bg-primary m-1">Java</span>
-                <span class="badge bg-primary m-1">MATLAB</span>
-                <span class="badge bg-primary m-1">Git</span>
-                <span class="badge bg-primary m-1">TypeScript</span>
-                <span class="badge bg-primary m-1">Bootstrap</span>
-                <span class="badge bg-primary m-1">Vue.js</span>
-                <span class="badge bg-primary m-1">C</span>
-                <span class="badge bg-primary m-1">Tailwind CSS</span>
-                <span class="badge bg-primary m-1">React</span>
-                <span class="badge bg-primary m-1">Node.js</span>
-                <span class="badge bg-primary m-1">Microsoft Access</span>
-                <h4 class="mb-3 mt-4">Langues</h4>
-                <span class="badge bg-primary m-1">Anglais (C1)</span>
-                <span class="badge bg-primary m-1">Français (professionnel)</span>
-                <span class="badge bg-primary m-1">Arabe (natif)</span>
-                <span class="badge bg-primary m-1">Allemand (débutant)</span>
-                <h4 class="mb-3 mt-4">Qualités humaines</h4>
-                <span class="badge bg-primary m-1">Travail d’équipe</span>
-                <span class="badge bg-primary m-1">Leadership</span>
-                <span class="badge bg-primary m-1">Résolution de problèmes</span>
-                <span class="badge bg-primary m-1">Communication</span>
-                <span class="badge bg-primary m-1">Adaptabilité</span>
-            </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-icon" style="background:rgba(255,107,107,0.15)">💻</div>
+        <h3>Développement</h3>
+        <div class="tags">
+          <span class="tag">Python</span>
+          <span class="tag">JavaScript</span>
+          <span class="tag">TypeScript</span>
+          <span class="tag">Java</span>
+          <span class="tag">C</span>
+          <span class="tag">MATLAB</span>
+          <span class="tag">React</span>
+          <span class="tag">Vue.js</span>
+          <span class="tag">Node.js</span>
         </div>
-    </section>
-
-    <section id="portfolio" class="py-5">
-        <div class="container">
-            <h2 class="text-center mb-5">Portfolio</h2>
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="card h-100">
-                        <img src="logo (1).jpg" class="card-img-top" alt="Aventure Étudiant">
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title">Aventure Étudiant</h5>
-                            <p class="card-text">Site web pour étudiants internationaux (HTML, CSS, PHP, JS, phpMyAdmin)</p>
-                            <div class="mt-auto"><a href="https://github.com/HamdiEA/Aventure-Etudiant" class="btn btn-primary">Voir le projet</a></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card h-100">
-                        <img src="logo.png" class="card-img-top" alt="Vitesse Auto">
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title">Vitesse Auto</h5>
-                            <p class="card-text">Application web full-stack (HTML, JS, CSS)</p>
-                            <div class="mt-auto"><a href="https://github.com/HamdiEA/Vitesse-Auto" class="btn btn-primary">Voir le projet</a></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card h-100">
-                        <img src="R (2).jpg" class="card-img-top" alt="Base de données Forza Horizon 4">
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title">Base de données Forza Horizon 4</h5>
-                            <p class="card-text">Base Microsoft Access avec 20 requêtes SQL</p>
-                            <div class="mt-auto"><a href="https://github.com/HamdiEA/Data-Base-Forza-Horizon-4" class="btn btn-primary">Voir le projet</a></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card h-100">
-                        <img src="R (1).png" class="card-img-top" alt="Formulaire JS">
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title">Formulaire JS</h5>
-                            <p class="card-text">Projet JavaScript pour la manipulation du DOM et la validation de formulaires</p>
-                            <div class="mt-auto"><a href="https://github.com/HamdiEA/Formulaire" class="btn btn-primary">Voir le projet</a></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card h-100">
-                        <img src="wise-logo.jpg" class="card-img-top" alt="The Wise Restaurant">
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title">The Wise Restaurant</h5>
-                            <p class="card-text">Site web statique avec React, Vite, Tailwind CSS et intégration d’API open source.</p>
-                            <div class="mt-auto d-flex gap-2">
-                                <a href="https://thewisrerestaurants.com" class="btn btn-primary">Voir le site</a>
-                                <a href="https://github.com/HamdiEA/thewiserestaurant" class="btn btn-primary">Code source</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card h-100">
-                        <img src="wise-logo.jpg" class="card-img-top" alt="The Wise AI Website">
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title">The Wise AI Website</h5>
-                            <p class="card-text">Version améliorée full-stack avec API IA (open source et commerciale) et proxy backend.</p>
-                            <div class="mt-auto"><a href="https://github.com/HamdiEA/the-wise-ai" class="btn btn-primary">Voir le projet</a></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card h-100">
-                        <img src="bootstrap-5-layout (1).jpg" class="card-img-top mt-2" alt="Portfolio personnel">
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title">Portfolio</h5>
-                            <p class="card-text">Portfolio personnel (HTML, Bootstrap)</p>
-                            <div class="mt-auto"><a href="https://github.com/HamdiEA/portfulioEA" class="btn btn-primary">Voir le projet</a></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-icon" style="background:rgba(255,200,50,0.15)">🌐</div>
+        <h3>Web & UI</h3>
+        <div class="tags">
+          <span class="tag">HTML / CSS</span>
+          <span class="tag">Tailwind CSS</span>
+          <span class="tag">Bootstrap</span>
+          <span class="tag">Express</span>
+          <span class="tag">Vite</span>
+          <span class="tag">React Router</span>
         </div>
-    </section>
-
-    <section id="experience" class="py-5 bg-light">
-        <div class="container">
-            <h2 class="text-center mb-5">Expérience</h2>
-            <div class="row g-4">
-                <div class="col-md-6">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">Inventoriste</h5>
-                            <h6 class="card-subtitle text-muted">RGIS Valenciennes</h6>
-                            <p class="text-muted small"><i class="bi bi-geo-alt-fill me-1"></i>Valenciennes Mont Houy 59300</p>
-                            <span class="badge bg-primary">Avr. 2024 - Présent</span>
-                            <p class="card-text mt-3">Comptage et vérification des stocks. Développement de la précision et de la réactivité.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">Gérant & Développeur Web</h5>
-                            <h6 class="card-subtitle text-muted">The Wise Restaurant</h6>
-                            <p class="text-muted small"><i class="bi bi-geo-alt-fill me-1"></i>Tunisie, Monastir, Ksar Hellal 5050</p>
-                            <span class="badge bg-primary">Nov. 2020 - Déc. 2022</span>
-                            <p class="card-text mt-3">Gestion complète du restaurant et développement de son site web avec React, Vite, Tailwind CSS et API IA. Développement de compétences en gestion et leadership.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <h2 class="text-center mb-5 mt-5">Formation</h2>
-            <div class="row g-4">
-                <div class="col-md-6">
-                    <div class="card h-100"><div class="card-body">
-                        <h5 class="card-title">Licence Informatique</h5>
-                        <h6 class="card-subtitle text-muted">INSA Hauts-de-France</h6>
-                        <span class="badge bg-primary">2023 - Présent</span>
-                        <p class="card-text mt-3">Moyenne (L1-L2) : 14.3/20</p>
-                    </div></div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card h-100"><div class="card-body">
-                        <h5 class="card-title">Baccalauréat Mathématiques</h5>
-                        <h6 class="card-subtitle text-muted">Lycée Said Bu Baker</h6>
-                        <span class="badge bg-primary">2022</span>
-                        <p class="card-text mt-3">Mention Bien | Moknine, Monastir, Tunisie</p>
-                    </div></div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card h-100"><div class="card-body">
-                        <h5 class="card-title">Certificat d’anglais</h5>
-                        <h6 class="card-subtitle text-muted">American Academy of English</h6>
-                        <span class="badge bg-primary">Déc. 2022 - Mar. 2023</span>
-                        <p class="card-text mt-3">Formation en langue anglaise.</p>
-                    </div></div>
-                </div>
-            </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-icon" style="background:rgba(108,99,255,0.15)">🛠</div>
+        <h3>Infra & Outils</h3>
+        <div class="tags">
+          <span class="tag">Docker</span>
+          <span class="tag">Linux</span>
+          <span class="tag">Git</span>
+          <span class="tag">DHCP / DNS</span>
+          <span class="tag">Routage inter-VLAN</span>
+          <span class="tag">IoT</span>
+          <span class="tag">Networking</span>
         </div>
-    </section>
-
-    <section id="career" class="py-5">
-        <div class="container">
-            <h2 class="text-center mb-5">Objectifs professionnels</h2>
-            <p class="lead text-center">
-                Mon objectif est d’intégrer une entreprise innovante où je pourrai contribuer à la création de plateformes web modernes et de systèmes intelligents.  
-                En tant que <strong>candidat francophone éligible au Programme de mobilité francophone</strong>, je m’intéresse particulièrement aux opportunités au <strong>Canada</strong> et en <strong>Suisse</strong> à partir de mi-2026.
-            </p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-icon" style="background:rgba(0,212,170,0.15)">🤝</div>
+        <h3>Soft Skills</h3>
+        <div class="tags">
+          <span class="tag">Leadership</span>
+          <span class="tag">Travail d'équipe</span>
+          <span class="tag">Résolution de problèmes</span>
+          <span class="tag">Communication</span>
+          <span class="tag">Adaptabilité</span>
         </div>
-    </section>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <section id="contact" class="py-5">
-        <div class="container">
-            <h2 class="text-center mb-5">Contact</h2>
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="card"><div class="card-body p-4">
-                        <div class="row g-4 text-center">
-                            <div class="col-md-4">
-                                <i class="bi bi-geo-alt-fill text-primary fs-1 mb-3"></i>
-                                <h5>Localisation</h5>
-                                <p>FAMARS 59300, Valenciennes, France</p>
-                            </div>
-                            <div class="col-md-4">
-                                <i class="bi bi-envelope-fill text-primary fs-1 mb-3"></i>
-                                <h5>Email</h5>
-                                <p>hamdielabedtn1@gmail.com</p>
-                            </div>
-                            <div class="col-md-4">
-                                <i class="bi bi-telephone-fill text-primary fs-1 mb-3"></i>
-                                <h5>Téléphone</h5>
-                                <p>0775726724</p>
-                            </div>
-                        </div>
-                    </div></div>
-                </div>
-            </div>
+<!-- PROJECTS -->
+<section id="portfolio">
+  <div class="container">
+    <div class="section-label">Portfolio</div>
+    <h2 class="section-title">Projets récents</h2>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <div class="project-emoji">🔍</div>
+        <h3>CyberVision</h3>
+        <p>Plateforme d'analyse forensique d'images assistée par IA — analyse EXIF, entropie de Shannon, détection stéganographie LSB, traitement OpenCV.</p>
+        <div class="tags" style="margin-bottom:1rem">
+          <span class="tag">Python</span><span class="tag">OpenCV</span><span class="tag">Machine Learning</span><span class="tag">JavaScript</span>
         </div>
-    </section>
-
-    <footer class="bg-dark text-white py-4">
-        <div class="container text-center">
-            <div class="mb-3">
-                <a href="https://github.com/HamdiEA" class="text-white me-3"><i class="bi bi-github fs-4"></i></a>
-                <a href="https://www.linkedin.com/in/hamdiea/" class="text-white me-3"><i class="bi bi-linkedin fs-4"></i></a>
-                <a href="https://portfulioea.netlify.app/" class="text-white"><i class="bi bi-globe fs-4"></i></a>
-            </div>
-            <p class="small mt-3">© 2025 Hamdi El Abed — Réalisé avec HTML, Bootstrap et hébergé sur Netlify</p>
+        <div class="project-footer">
+          <a href="https://github.com/HamdiEA/CyberVision" class="project-link" target="_blank">GitHub →</a>
+          <span class="project-year">2025</span>
         </div>
-    </footer>
+      </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+      <div class="project-card">
+        <div class="project-emoji">🧠</div>
+        <h3>RAG-Local</h3>
+        <p>Application RAG locale combinant backend Python et interface web pour la recherche contextuelle et génération de réponses privacy-first.</p>
+        <div class="tags" style="margin-bottom:1rem">
+          <span class="tag">Python</span><span class="tag">RAG pipeline</span><span class="tag">Stockage vectoriel</span><span class="tag">JavaScript</span>
+        </div>
+        <div class="project-footer">
+          <a href="https://github.com/HamdiEA/RAG-Local" class="project-link" target="_blank">GitHub →</a>
+          <span class="project-year">2026</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-emoji">🎮</div>
+        <h3>SENSE</h3>
+        <p>Jeu éducatif vocal pour enfants non-voyants, utilisant Speech-to-Text et Text-to-Speech pour une expérience sonore et imaginative.</p>
+        <div class="tags" style="margin-bottom:1rem">
+          <span class="tag">IA vocale</span><span class="tag">Speech-to-Text</span><span class="tag">JavaScript</span><span class="tag">Web Audio</span>
+        </div>
+        <div class="project-footer">
+          <a href="https://github.com/HamdiEA/SENSE" class="project-link" target="_blank">GitHub →</a>
+          <span class="project-year">2026</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-emoji">🍽</div>
+        <h3>The Wise Restaurant</h3>
+        <p>Site de restauration avec chatbot IA recommandant des plats selon allergies et préférences. Backend proxy inclus.</p>
+        <div class="tags" style="margin-bottom:1rem">
+          <span class="tag">React</span><span class="tag">TypeScript</span><span class="tag">Node.js</span><span class="tag">DeepSeek</span>
+        </div>
+        <div class="project-footer">
+          <div style="display:flex;gap:0.8rem">
+            <a href="https://thewiserestaurants.com" class="project-link" target="_blank">Site →</a>
+            <a href="https://github.com/HamdiEA/the-wise-ai" class="project-link" target="_blank">Code →</a>
+          </div>
+          <span class="project-year">2025</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-emoji">🚗</div>
+        <h3>Vitesse Auto</h3>
+        <p>Application web full-stack permettant de louer des voitures de luxe, vérifier la disponibilité et comparer les prix.</p>
+        <div class="tags" style="margin-bottom:1rem">
+          <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span>
+        </div>
+        <div class="project-footer">
+          <a href="https://github.com/HamdiEA/Vitesse-Auto" class="project-link" target="_blank">GitHub →</a>
+          <span class="project-year">2024</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-emoji">🌐</div>
+        <h3>Aventure Étudiant</h3>
+        <p>Site web pour étudiants internationaux avec base de données et gestion de profils.</p>
+        <div class="tags" style="margin-bottom:1rem">
+          <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">PHP</span><span class="tag">phpMyAdmin</span>
+        </div>
+        <div class="project-footer">
+          <a href="https://github.com/HamdiEA/Aventure-Etudiant" class="project-link" target="_blank">GitHub →</a>
+          <span class="project-year">2024</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <div class="section-label">Expérience</div>
+    <h2 class="section-title">Parcours professionnel</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">Avril – Juin 2026</div>
+        <h3>Stage — IA & Automatisation</h3>
+        <div class="timeline-org">Tours, France</div>
+        <p class="timeline-desc">Audit de site web, déploiement d'IA locale, mise en place de pipeline RAG, automatisation de veille sectorielle, synthèse de réunions, extraction de données et développement d'applications métier avec livrables fonctionnels.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot" style="background:var(--accent2)"></div>
+        <div class="timeline-date">Avr. 2024 – Présent</div>
+        <h3>Inventoriste</h3>
+        <div class="timeline-org">RGIS — Valenciennes</div>
+        <p class="timeline-desc">Comptage et vérification des stocks. Développement de la précision et de la réactivité.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot" style="background:var(--accent3)"></div>
+        <div class="timeline-date">Nov. 2020 – Déc. 2022</div>
+        <h3>Gérant & Développeur Web</h3>
+        <div class="timeline-org">The Wise Restaurant — Ksar Hellal, Tunisie</div>
+        <p class="timeline-desc">Gestion complète du restaurant et développement du site web avec React, Vite, Tailwind CSS et APIs IA.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="container">
+    <div class="section-label">Formation</div>
+    <h2 class="section-title">Parcours académique</h2>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <div class="edu-year">2026 – 2028</div>
+        <h3>Master RES-ALT</h3>
+        <div class="school">Réseaux, Cybersécurité & Cloud · Sorbonne Université</div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-year">2026 – 2028 (admis)</div>
+        <h3>Master IA & Cloud</h3>
+        <div class="school">INSA Hauts-de-France</div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-year">2023 – 2026</div>
+        <h3>Licence Informatique</h3>
+        <div class="school">INSA Hauts-de-France · Moy. 14.3/20</div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-year">Déc. 2022 – Mars 2023</div>
+        <h3>Certificat d'Anglais</h3>
+        <div class="school">American Academy of English — San Francisco</div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-year">2022</div>
+        <h3>Baccalauréat Scientifique</h3>
+        <div class="school">Spécialité Maths · Mention Bien · Lycée Saïd Bou Baker, Tunisie</div>
+      </div>
+    </div>
+
+    <!-- Languages -->
+    <div style="margin-top:3rem">
+      <div class="section-label">Langues</div>
+      <div class="lang-grid" style="margin-top:1rem">
+        <div class="lang-card"><div class="lang-flag">🇬🇧</div><div class="lang-name">Anglais</div><div class="lang-level">C1</div></div>
+        <div class="lang-card"><div class="lang-flag">🇫🇷</div><div class="lang-name">Français</div><div class="lang-level">Professionnel</div></div>
+        <div class="lang-card"><div class="lang-flag">🇹🇳</div><div class="lang-name">Arabe</div><div class="lang-level">Natif</div></div>
+        <div class="lang-card"><div class="lang-flag">🇩🇪</div><div class="lang-name">Allemand</div><div class="lang-level">Débutant</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="section-label">Contact</div>
+    <h2 class="section-title">Me contacter</h2>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="contact-icon">📧</div>
+        <div class="contact-label">Email</div>
+        <div class="contact-val"><a href="mailto:hamdielabedtn1@gmail.com">hamdielabedtn1@gmail.com</a></div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">📱</div>
+        <div class="contact-label">Téléphone</div>
+        <div class="contact-val">07 75 72 67 24<br><span style="font-size:0.75rem;color:var(--muted)">WhatsApp jusqu'au 8 juin 2026</span></div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">📍</div>
+        <div class="contact-label">Localisation</div>
+        <div class="contact-val">Valenciennes, France</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-links">
+    <a href="https://github.com/HamdiEA" target="_blank" title="GitHub">⌨</a>
+    <a href="https://www.linkedin.com/in/hamdiea/" target="_blank" title="LinkedIn">💼</a>
+    <a href="https://portfulioea.netlify.app/" target="_blank" title="Portfolio">🌐</a>
+  </div>
+  <p>© 2026 Hamdi El Abed</p>
+</footer>
+
 </body>
 </html>
